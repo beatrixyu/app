@@ -2,24 +2,23 @@
   <div id="main h-auto">
       <div class="flex h-20">
         <div class="flex-1">
-          <div id="registerBtn" class="h-full flex justify-center items-center flex-col mt-3 border-b-4 border-primary" v-on:click="changeBorderColor">
-            <router-link exact to="/register" class="uppercase">
+            <router-link to="/register" class="uppercase">
+             <div id="registerBtn" class="h-full flex justify-center items-center flex-col mt-3 border-b-4 border-primary" v-on:click="changeBorderColor">
             <div class="inline-block align-middle font-semibold font-poppins">registrieren
              </div> 
-            </router-link>
             <p class="text-side text-gray-400">oder Gastbestellung</p>
           </div>
-            
+            </router-link>
         </div>
         <div class="flex-1 text-center">
-          <div id="loginBtn" class="h-full flex justify-center items-center flex-col  border-b-4 mt-3" v-on:click="reverseBorderColor">
             <router-link to="/login">
+             <div id="loginBtn" class="h-full flex justify-center items-center flex-col  border-b-4 mt-3" v-on:click="reverseBorderColor">
             <span class="uppercase font-semibold">
               Anmelden
             </span>
-            </router-link>
-            <p class="text-side text-gray-400">im Kundenkonto</p>
+             <p class="text-side text-gray-400">im Kundenkonto</p>
           </div>
+            </router-link>
         </div>
   </div>
       <router-view></router-view>

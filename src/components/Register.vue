@@ -24,14 +24,42 @@
      <form v-on:reset="resetFields" v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
        <div class="form-row border border-gray-400 mt-5">
          <div class="form-field h-10">
-          <!-- <label for="first-name">First Name</label> -->
-          <input class="placeholder-gray-400 h-full w-full focus:ring-1 focus:ring-purple-600 pl-4 text-side" type="text" id="first-name" v-model.trim="fullname" placeholder="Vorname*"/>
+          <div class="relative w-full h-full">
+            <input 
+              type="text" 
+              id="fullname"
+              value=''
+              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+              v-model.trim="email" 
+              placeholder="Vorname*"
+            >
+            <button 
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+            ><img class="w-5" src="../assets/images/check1.png"/></button>
+            <button 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+            ><img class="w-5" src="../assets/images/cross.png"/></button>
+        </div>
         </div>
       </div>
       <div class="form-row border border-gray-400 mt-5">
         <div class="form-field h-10">
-          <!-- <label for="email">Email</label> -->
-          <input class="placeholder-gray-400 h-full w-full pl-4 text-side" type="text" id="email" v-model.trim="email" placeholder="E-Mail Adresse*"/>
+          <div class="relative w-full h-full">
+            <input 
+              type="email" 
+              id="email"
+              value=''
+              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+              v-model.trim="email" 
+              placeholder="E-Mail Adresse*"
+            >
+            <button 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+            ><img class="w-5" src="../assets/images/check1.png"/></button>
+            <button 
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+            ><img class="w-5" src="../assets/images/cross.png"/></button>
+        </div>
         </div>
       </div>
        <div class="form-row border border-gray-400 mt-5">
@@ -42,6 +70,13 @@
               class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side"
               v-on:click="showPassword"
             >ZEIGEN</button>
+            <button 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+            ><img class="w-5" src="../assets/images/check1.png"/></button>
+            <button 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+            ><img class="w-5" src="../assets/images/cross.png"/></button>
+
         </div>
         </div>
       </div>
@@ -67,11 +102,11 @@ export default {
     },
     methods:{
       showPassword: ()=>{
-        var x = document.getElementById("password");
-          if (x.type === "password") {
-            x.type = "text";
+        var password = document.getElementById("password");
+          if (password.type === "password") {
+            password.type = "text";
           } else {
-            x.type = "password";
+            password.type = "password";
           }
       }
     }
