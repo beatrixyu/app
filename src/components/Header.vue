@@ -1,12 +1,12 @@
 <template>
   <div id="header" class="grid justify-items-stretch h-22">
       <div class="flex">
-      <div class="w-1/2">
-        <img class="w-12 ml-6" alt="company logo" src="../assets/images/logo.png">
+      <div class="w-1/2 cursor-pointer">
+         <a href="https://www.justspices.de/" target="_blank"><img class="w-12 ml-6" alt="company logo" src="../assets/images/logo.png"></a> 
       </div>
       <div class="flex justify-start items-center w-1/2 pr-10">
           <div class="w-1/7 mr-2 flex justify-center">
-              <img class="w-6" alt="trust logo" src="../assets/images/safe.png"/>
+              <img class="w-6" alt="trust logo" src="../assets/images/safe.png" />
           </div>
           <div class="w-6/7">
               <div class="flex flex-row" >
