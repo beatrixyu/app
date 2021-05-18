@@ -1,5 +1,5 @@
 <template>
-  <div id="login" class="h-full">
+  <div id="login" class="h-60">
     <div class="border-gray-200">
       <div class="pl-6 pr-6">
       <h1 class="text-xl leading-relaxed mt-12 font-bold uppercase">WILLKOMMEN ZURÜCK</h1>
@@ -25,6 +25,10 @@
         </div>
       </div>
        <button class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold uppercase" type="submit" v-bind:disabled="!formIsValid">anmelden</button>
+      <div class="text-gray-400 w-full mt-10">
+       <p class="text-center underline">Passwort vergessen?</p>
+     </div>
+
      </form>              
 
   </div>

@@ -8,6 +8,16 @@ module.exports = {
        },
        fontFamily:{
            body: ['Poppins','Roboto']
+       },
+       borderWidth:{
+        'big': '30px'
+       },
+       fontSize:{
+         'side':'14px'
+       },
+       height: {
+         '60':'60vh',
+         '50':'50vh'
        }
    }
   }
