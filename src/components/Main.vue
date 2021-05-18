@@ -3,7 +3,7 @@
       <div class="flex h-20">
         <div class="flex-1">
           <div class="h-full flex justify-center items-center flex-col border-b-2 mt-3">
-            <router-link to="/register" class="uppercase">
+            <router-link exact to="/register" class="uppercase">
             <span class="inline-block align-middle font-semibold font-poppins">registrieren
              </span> 
             </router-link>
