@@ -13,7 +13,8 @@ module.exports = {
         'big': '30px'
        },
        fontSize:{
-         'side':'14px'
+         'side':'14px',
+         'mini':'10px'
        },
        height: {
          '60':'60vh',

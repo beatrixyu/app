@@ -18,14 +18,14 @@
               </div>
               <div class="flex flex-row items-center">
                   <div class="w-2/5">
-                    <span class="inline-block align-middle text-xs tracking-tighter"> 4.85 / 5.00</span>
+                    <span class="inline-block align-middle text-mini tracking-tighter"> 4.85 / 5.00</span>
                   </div>
                   <!-- <div class="flex flex-row justify-center items-center w-3/5"> -->
                     <div class="mr-0.5">
                       <img class="w-4" alt="e" src="../assets/images/e.png"/>
                     </div>
                     <div class="w-2/5 align-middle">
-                      <span class="inline-block align-middle text-xs tracking-tighter"><strong class="mr-0.5">TRUSTED</strong>SHOPS</span>
+                      <span class="inline-block align-middle text-mini tracking-tighter"><strong class="mr-0.5">TRUSTED</strong>SHOPS</span>
                     </div>
                   <!-- </div> -->
               </div>
