@@ -1,5 +1,5 @@
 <template>
-  <div id="register" class="h-full mb-16">
+  <div id="register" class="h-60 mb-16">
     <div class="border-b border-gray-200">
       <div class="pl-6 pr-6">
       <h1 class="text-xl leading-relaxed mt-12 font-bold">ICH BIN NEU HIER</h1>
@@ -80,7 +80,15 @@
         </div>
         </div>
       </div>
-       <button class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold" type="submit" v-bind:disabled="!formIsValid">registrieren</button>
+      <div class="relative w-full h-full">
+       <button class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" v-bind:disabled="!formIsValid">
+       registrieren
+      </button>
+      <button class="absolute bg-primary h-11 bg-secondary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit">
+      <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
+      </button>
+      </div>
+      <div class="text-justify text-mini text-secondary mt-20">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</div>
      </form>              
   </div>
 </template>

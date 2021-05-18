@@ -54,6 +54,9 @@
         </div>
       </div>
        <button class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold uppercase" type="submit" v-bind:disabled="!formIsValid">anmelden</button>
+      <div >
+        <p><img src="../assets/images/cross.png" alt="invalid"> Ungültiger Benutzername oder Passwort.</p>
+      </div>
       <div class="text-gray-400 w-full mt-10">
        <p class="text-center underline">Passwort vergessen?</p>
      </div>
