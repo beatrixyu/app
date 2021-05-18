@@ -25,20 +25,23 @@
        <div class="form-row border border-gray-400 mt-5">
          <div class="form-field h-10">
           <!-- <label for="first-name">First Name</label> -->
-          <input class="placeholder-gray-400 h-full w-full focus:ring-1 focus:ring-purple-600 pl-4 text-xs" type="text" id="first-name" v-model.trim="fullname" placeholder="Vorname*"/>
+          <input class="placeholder-gray-400 h-full w-full focus:ring-1 focus:ring-purple-600 pl-4 text-side" type="text" id="first-name" v-model.trim="fullname" placeholder="Vorname*"/>
         </div>
       </div>
       <div class="form-row border border-gray-400 mt-5">
         <div class="form-field h-10">
           <!-- <label for="email">Email</label> -->
-          <input class="placeholder-gray-400 h-full w-full pl-4 text-xs" type="text" id="email" v-model.trim="email" placeholder="E-Mail Adresse*"/>
+          <input class="placeholder-gray-400 h-full w-full pl-4 text-side" type="text" id="email" v-model.trim="email" placeholder="E-Mail Adresse*"/>
         </div>
       </div>
        <div class="form-row border border-gray-400 mt-5">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
-            <input type="password" class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-xs rounded-lg z-0 outline-none" id="password" v-model.trim="password" placeholder="Passwort*">
-            <button class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800">ZEIGEN</button>
+            <input type="password" class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" id="password" v-model.trim="password" placeholder="Passwort*">
+            <button 
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side"
+              v-on:click="showPassword"
+            >ZEIGEN</button>
         </div>
         </div>
       </div>
@@ -60,6 +63,16 @@ export default {
     computed: {
       formIsValid(){
         return this.fullname && this.email && this.password;
+      }
+    },
+    methods:{
+      showPassword: ()=>{
+        var x = document.getElementById("password");
+          if (x.type === "password") {
+            x.type = "text";
+          } else {
+            x.type = "password";
+          }
       }
     }
 }

@@ -17,7 +17,7 @@ module.exports = {
          'mini':'10px'
        },
        height: {
-         '60':'60vh',
+         '70':'70vh',
          '50':'50vh'
        }
    }

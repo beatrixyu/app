@@ -2,7 +2,7 @@
   <div id="main h-auto">
       <div class="flex h-20">
         <div class="flex-1">
-          <div id="registerBtn" class="h-full flex justify-center items-center flex-col mt-3 border-b-4 active:border-primary focus:border-primary" v-on:click="changeBorderColor">
+          <div id="registerBtn" class="h-full flex justify-center items-center flex-col mt-3 border-b-4 border-primary" v-on:click="changeBorderColor">
             <router-link exact to="/register" class="uppercase">
             <div class="inline-block align-middle font-semibold font-poppins">registrieren
              </div> 
@@ -41,11 +41,11 @@ export default {
     // Login
   },
   methods: {
-    changeBorderColor: function(){
+    changeBorderColor:()=>{
       document.getElementById("registerBtn").style.borderColor = "#AED23B";
       document.getElementById("loginBtn").style.borderColor = "#e5e7eb";
     },
-     reverseBorderColor: function(){
+     reverseBorderColor:()=>{
       document.getElementById("registerBtn").style.borderColor = "#e5e7eb";
       document.getElementById("loginBtn").style.borderColor = "#AED23B";
     }
