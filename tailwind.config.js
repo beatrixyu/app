@@ -21,7 +21,13 @@ module.exports = {
          '60':'60vh',
          '65':'65vh',
          '55':'55vh'
-       }
+       },
+       screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+      }
    }
   }
 }

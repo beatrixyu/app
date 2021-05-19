@@ -22,8 +22,8 @@
     </div>
       </div>
      <form v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
-       <div class="form-row border border-gray-400 mt-5">
-         <div class="form-field h-10">
+       <div class="form-row border border-gray-400 mt-5" >
+         <div class="form-field h-10" :class="{ 'error': $v.name.$error }">
           <div class="relative w-full h-full">
             <!-- <input 
               type="text" 
@@ -64,13 +64,14 @@
               v-model.trim="email" 
               @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
+              v-bind:style="[touchedEmailStyles,invalidEmailStyles]"
             >
             <button 
               class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
               class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross.png"/></button>
+            ><img class="w-5" src="../assets/images/cross1.png"/></button>
         </div>
         </div>
       </div>
@@ -83,11 +84,12 @@
               v-on:click="showPassword"
             >ZEIGEN</span>
             <button 
+          
               class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
               class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross.png"/></button>
+            ><img class="w-5" src="../assets/images/cross1.png"/></button>
 
         </div>
         </div>
@@ -123,7 +125,7 @@
 </template>
 
 <script>
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
 export default {
     name:'registerForm',
@@ -140,12 +142,45 @@ export default {
         required,
         minLength: minLength(4),
         maxLength:maxLength(20)
+      },
+      email:{
+        required,
+        email,
+      //   isStrickEmail(value){
+      //  if(value === ' ') return true
+      //  let email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      //  email_regex.test(value)
+      //   }
       }
     },
     computed: {
       formIsValid(){
         return this.name && this.email && this.password;
-      }
+      },
+       emailIsValid() {
+         return this.email.includes('@');
+       },
+       touchedEmailStyles(){
+         if (this.email) {
+          return {
+            'border-color': '#bdbcbc',
+            'border-width': '2px'
+          }
+        } else {
+          return {
+            'border-color': '#e0e0e0',
+            'border-width': '2px'
+          }     
+        }
+        }, 
+         invalidEmailStyles(){
+           if (this.email && !this.emailIsValid) {
+             return {
+               'background-color': '#ffeded',
+               'border-color': '#da5252'
+             }
+           } else return ''
+         }
     },
     methods:{
       setName(value) {

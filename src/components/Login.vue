@@ -8,7 +8,7 @@
       </div>
 
      <form v-on:submit.prevent="loginForm" class="mt-7 pl-6 pr-6">
-      <div class="form-row border border-gray-400 mt-5">
+      <div class="form-row border border-gray-400 mt-5" id="emailContainer">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input 
@@ -18,17 +18,18 @@
               class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
               v-model.trim="email" 
               placeholder="E-Mail Adresse*"
+              
             >
             <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="emailCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross.png"/></button>
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="emailCross"
+            ><img class="w-5" src="../assets/images/cross1.png"/></button>
         </div>
         </div>
       </div>
-       <div class="form-row border border-gray-400 mt-5">
+       <div class="form-row border border-gray-400 mt-5" id="passwordContainer">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input 
@@ -39,17 +40,17 @@
              v-model.trim="password" 
              placeholder="Passwort*"
              >
-            <button 
+            <span 
               class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side flex justify-center items-center"
               v-on:click="showPassword"
-            >ZEIGEN</button>
+            ><p id="showpassword">ZEIGEN</p> </span>
             
             <button 
-              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="passwordCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross.png"/></button>
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="passwordCross"
+            ><img class="w-5" src="../assets/images/cross1.png"/></button>
 
         </div>
         </div>
@@ -103,12 +104,7 @@ import { required, email } from 'vuelidate/lib/validators'
     validations:{
       email:{
         required,
-        email,
-      //   isStrickEmail(value){
-      //     if(value === ' ') return true
-      //     let email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      //     email_regex.test(value)
-      //  }
+        email
       },
       password: {
         required
@@ -136,12 +132,30 @@ import { required, email } from 'vuelidate/lib/validators'
       },
       onLogin(){
          this.$v.$touch()
-        if(this.email == '123@123.com' && this.password == '123456'){
-          const url ='https://www.justspices.de/'
-          window.location = url;
+        if(this.email == '123@123.com' && this.password == '123'){
+          document.getElementById("passwordContainer").style.borderColor="#AED23B"
+          document.getElementById("passwordCheck").style.display="block"
+          document.getElementById("showpassword").style.display="none"
+          document.getElementById("passwordCross").style.display="none"
+          document.getElementById("emailContainer").style.borderColor="#AED23B"
+          document.getElementById("emailCheck").style.display="block"
+          document.getElementById("emailCross").style.display="none"
+          document.getElementById("errorMsg").style.display='none';
+
+           setTimeout(()=>{
+             const url ='https://www.justspices.de/'
+             window.location = url;
+          },2000)
         } else {
-          let errorMsg = document.getElementById("errorMsg");
-          errorMsg.style.display='block'
+          document.getElementById("errorMsg").style.display='block';
+          document.getElementById("passwordContainer").style.borderColor="#FC5763"
+          document.getElementById("passwordCross").style.display="block"
+          document.getElementById("showpassword").style.display="none"
+          document.getElementById("emailContainer").style.borderColor="#FC5763"
+          document.getElementById("emailCheck").style.display="none"
+          document.getElementById("emailCross").style.display="block"
+
+
         }
       },
       loginForm() {
@@ -149,7 +163,7 @@ import { required, email } from 'vuelidate/lib/validators'
       this.$v.$touch()
       if (this.$v.$invalid) {
         this.loginStatus = 'ERROR'
-      }else if(this.email !== '123@123.com' || this.password !== '123456'){
+      }else if(this.email !== '123@123.com' || this.password !== '123'){
         this.loginStatus = 'ERROR'
       }
       else {
