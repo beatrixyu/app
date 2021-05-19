@@ -1,5 +1,5 @@
 <template>
-  <div id="register" class="h-65 mb-16">
+  <div id="register" class="h-60 mb-16">
     <div class="border-b border-gray-200">
       <div class="pl-6 pr-6">
       <h1 class="text-xl leading-relaxed mt-12 font-bold">ICH BIN NEU HIER</h1>
@@ -62,6 +62,7 @@
               value=''
               class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
               v-model.trim="email" 
+              @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
             >
             <button 
@@ -112,7 +113,7 @@
         type="submit">
       <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
       </button> -->
-      <p class="text-justify text-mini text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
+      <p class="text-justify text-mini text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
       </div>
       <!-- end -->
 
@@ -148,8 +149,12 @@ export default {
     },
     methods:{
       setName(value) {
-      this.name = value
-      this.$v.name.$touch()
+        this.name = value
+        this.$v.name.$touch()
+    },
+      setEmail(value) {
+        this.email = value
+        this.$v.email.$touch()
     },
       showPassword: ()=>{
         let password = document.getElementById("password");
@@ -169,7 +174,7 @@ export default {
             setTimeout(()=>{
                const url ='https://www.justspices.de/'
                window.location = url;
-               },2000)
+               },3000)
           }
     }
     }

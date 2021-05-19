@@ -26,7 +26,7 @@ const routes = [
     path: "/page-not-found",
     name: "404",
     component: {
-      template: '<p>Page Not Found<img src="../assets/images/logo.png"/></p>'
+      template: '<p>Page Not Found</p>'
   }  },
 ];
 
