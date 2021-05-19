@@ -7,7 +7,7 @@
     </div>
       </div>
 
-     <form v-on:reset="resetFields" v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
+     <form v-on:submit.prevent="loginForm" class="mt-7 pl-6 pr-6">
       <div class="form-row border border-gray-400 mt-5">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
@@ -53,17 +53,33 @@
         </div>
         </div>
       </div>
+       <!-- vuelidate -->
+      <!-- <div class="relative w-full h-full">
+      <button 
+        class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" 
+        type="submit" 
+        :disabled="!formIsValid"
+        @click="onLogin"
+       > anmelden
+        </button>
+        <div class="" v-if="loginStatus === 'ERROR'">
+        <div class="hidden text-danger text-justify text-mini mt-5" >
+          <i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.
+        </div>
+        </div>
+      </div> -->
+      <!-- end -->
        <button 
          class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold uppercase"
           type="submit" 
           v-bind:disabled="!formIsValid"
           @click="onLogin"
           >anmelden</button>
-      <div class="hidden text-danger text-justify text-mini mt-5">
+      <div class="hidden text-danger text-justify text-mini mt-5" id="errorMsg">
         <i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.
       </div>
       <div class="text-gray-400 w-full mt-10">
-       <p class="text-center underline">Passwort vergessen?</p>
+       <p class="text-center underline"><a href="https://beatrixyu.github.io/app/" target="_blank">Passwort vergessen?</a> </p>
      </div>
 
      </form>              
@@ -72,22 +88,18 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
+import { required, email } from 'vuelidate/lib/validators'
 
  export default {
     name:'loginForm',
     data() {
       return {
         email: "",
-        password:""
+        password:"",
+        loginStatus: null
       };
     },
     validations:{
-      fullname:{
-        required,
-        minLength: minLength(2),
-        maxLength:maxLength(20)
-      },
       email:{
         required,
         email,
@@ -96,6 +108,9 @@ import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
       //     let email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       //     email_regex.test(value)
       //  }
+      },
+      password: {
+        required
       }
     },
     computed: {
@@ -119,13 +134,27 @@ import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
         email.style.borderColor='#FC5763';
       },
       onLogin(){
+         this.$v.$touch()
         if(this.email == '123@123.com' && this.password == '123456'){
-          alert('successful')
+          const url ='https://www.justspices.de/'
+          window.location = url;
         } else {
-          alert('error')
-
+          let errorMsg = document.getElementById("errorMsg");
+          errorMsg.style.display='block'
         }
+      },
+      loginForm() {
+      console.log('login!')
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.loginStatus = 'ERROR'
+      }else if(this.email !== '123@123.com' || this.password !== '123456'){
+        this.loginStatus = 'ERROR'
       }
+      else {
+          this.loginStatus = 'OK'
+      }
+    }
     }
 }
 

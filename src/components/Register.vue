@@ -21,24 +21,35 @@
       </div>
     </div>
       </div>
-     <form v-on:reset="resetFields" v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
+     <form v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
        <div class="form-row border border-gray-400 mt-5">
          <div class="form-field h-10">
           <div class="relative w-full h-full">
-            <input 
+            <!-- <input 
               type="text" 
               id="fullname"
               value=''
               class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
-              v-model.trim="email" 
+              v-model.trim="fullname" 
               placeholder="Vorname*"
-            >
-            <button 
+            > -->
+            <!-- valid -->
+            <input 
+              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+              v-model.trim="$v.name.$model"
+              :class="{'is-invalid':$v.name.$error,'is-valid':!$v.name.$invalid }"
+              @input="setName($event.target.value)"
+              placeholder="Vorname*"
+            />
+            <!-- <div class="error text-mini text-danger" v-if="!$v.name.required">Name is required</div> -->
+            <div class="error text-mini text-danger" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
+            <!-- end -->
+            <!-- <button 
               class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross.png"/></button>
+            ><img class="w-5" src="../assets/images/cross.png"/></button> -->
         </div>
         </div>
       </div>
@@ -88,27 +99,50 @@
       <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
       </button>
       </div>
-      <div class="text-justify text-mini text-secondary mt-20">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</div>
-     </form>              
+
+      <!-- vuelidate -->
+      <div class="relative w-full h-full">
+      <button class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" :disabled="!formIsValid">registrieren</button>
+      <p class="text-justify text-mini text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
+      <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
+      </div>
+      <!-- end -->
+
+      <div class="hidden text-justify text-mini text-secondary mt-20">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</div>
+     </form>           
   </div>
 </template>
 
 <script>
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+
 export default {
     name:'registerForm',
     data() {
       return {
-        fullname: "",
+        name: "",
         email: "",
-        password:""
+        password:"",
+        submitStatus: null
       };
+    },
+    validations:{
+      name:{
+        required,
+        minLength: minLength(4),
+        maxLength:maxLength(20)
+      }
     },
     computed: {
       formIsValid(){
-        return this.fullname && this.email && this.password;
+        return this.name && this.email && this.password;
       }
     },
     methods:{
+      setName(value) {
+      this.name = value
+      this.$v.name.$touch()
+    },
       showPassword: ()=>{
         let password = document.getElementById("password");
           if (password.type === "password") {
@@ -116,7 +150,16 @@ export default {
           } else {
             password.type = "password";
           }
+      },
+      submitForm() {
+          console.log('submit!')
+          this.$v.$touch()
+          if (this.$v.$invalid) {
+            this.submitStatus = 'ERROR'
+          } else {
+              this.submitStatus = 'OK'
       }
+    }
     }
 }
 
