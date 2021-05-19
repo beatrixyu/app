@@ -95,20 +95,28 @@
        <button class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" v-bind:disabled="!formIsValid">
        registrieren
       </button>
-      <button class="absolute bg-primary h-11 bg-secondary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit">
+      <button 
+        class="absolute bg-primary h-11 bg-secondary rounded-sm w-full mt-5 uppercase text-white font-extrabold" 
+        v-if="submitStatus === 'OK'"
+        type="submit">
       <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
       </button>
+
       </div>
 
       <!-- vuelidate -->
       <div class="relative w-full h-full">
-      <button class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" :disabled="!formIsValid">registrieren</button>
+      <!-- <button 
+        class="absolute bg-primary h-11 bg-secondary rounded-sm w-full mt-5 uppercase text-white font-extrabold" 
+        v-if="submitStatus === 'OK'"
+        type="submit">
+      <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
+      </button> -->
       <p class="text-justify text-mini text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
-      <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
       </div>
       <!-- end -->
 
-      <div class="hidden text-justify text-mini text-secondary mt-20">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</div>
+      <!-- <div class="hidden text-justify text-mini text-secondary mt-20">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</div> -->
      </form>           
   </div>
 </template>

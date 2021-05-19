@@ -21,7 +21,13 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register
-  }
+  },
+  { 
+    path: "/page-not-found",
+    name: "404",
+    component: {
+      template: '<p>Page Not Found<img src="../assets/images/logo.png"/></p>'
+  }  },
 ];
 
 const router = new VueRouter({

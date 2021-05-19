@@ -79,7 +79,7 @@
         <i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.
       </div>
       <div class="text-gray-400 w-full mt-10">
-       <p class="text-center underline"><a href="https://beatrixyu.github.io/app/" target="_blank">Passwort vergessen?</a> </p>
+       <p class="text-center underline text-side"><a href="https://beatrixyu.github.io/app/" target="_blank">Passwort vergessen?</a> </p>
      </div>
 
      </form>              
