@@ -110,7 +110,7 @@ export default {
     },
     methods:{
       showPassword: ()=>{
-        var password = document.getElementById("password");
+        let password = document.getElementById("password");
           if (password.type === "password") {
             password.type = "text";
           } else {

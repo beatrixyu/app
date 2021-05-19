@@ -53,8 +53,13 @@
         </div>
         </div>
       </div>
-       <button class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold uppercase" type="submit" v-bind:disabled="!formIsValid">anmelden</button>
-      <div class="text-danger text-justify text-mini mt-5">
+       <button 
+         class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold uppercase"
+          type="submit" 
+          v-bind:disabled="!formIsValid"
+          @click="onLogin"
+          >anmelden</button>
+      <div class="hidden text-danger text-justify text-mini mt-5">
         <i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.
       </div>
       <div class="text-gray-400 w-full mt-10">
@@ -67,13 +72,31 @@
 </template>
 
 <script>
-export default {
+import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
+
+ export default {
     name:'loginForm',
     data() {
       return {
-        email: "123@123.com",
-        password:"123456"
+        email: "",
+        password:""
       };
+    },
+    validations:{
+      fullname:{
+        required,
+        minLength: minLength(2),
+        maxLength:maxLength(20)
+      },
+      email:{
+        required,
+        email,
+      //   isStrickEmail(value){
+      //     if(value === ' ') return true
+      //     let email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      //     email_regex.test(value)
+      //  }
+      }
     },
     computed: {
       formIsValid(){
@@ -88,6 +111,20 @@ export default {
           } else {
             password.type = "password";
           }
+      },
+      showError(){
+        let password = document.getElementById("password");
+        let email = document.getElementById("email");
+        password.style.borderColor='#FC5763';
+        email.style.borderColor='#FC5763';
+      },
+      onLogin(){
+        if(this.email == '123@123.com' && this.password == '123456'){
+          alert('successful')
+        } else {
+          alert('error')
+
+        }
       }
     }
 }
