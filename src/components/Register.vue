@@ -65,7 +65,7 @@
               placeholder="E-Mail Adresse*"
             >
             <button 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
               class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
@@ -77,15 +77,15 @@
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input type="password" class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" id="password" v-model.trim="password" placeholder="Passwort*">
-            <button 
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side"
+            <span
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side flex justify-center items-center"
               v-on:click="showPassword"
-            >ZEIGEN</button>
+            >ZEIGEN</span>
             <button 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/cross.png"/></button>
 
         </div>
@@ -165,8 +165,12 @@ export default {
           if (this.$v.$invalid) {
             this.submitStatus = 'ERROR'
           } else {
-              this.submitStatus = 'OK'
-      }
+            this.submitStatus = 'OK'
+            setTimeout(()=>{
+               const url ='https://www.justspices.de/'
+               window.location = url;
+               },2000)
+          }
     }
     }
 }

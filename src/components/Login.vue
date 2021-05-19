@@ -40,14 +40,15 @@
              placeholder="Passwort*"
              >
             <button 
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side"
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side flex justify-center items-center"
               v-on:click="showPassword"
             >ZEIGEN</button>
+            
             <button 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
-              class="absolute  top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/cross.png"/></button>
 
         </div>
