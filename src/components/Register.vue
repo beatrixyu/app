@@ -1,5 +1,5 @@
 <template>
-  <div id="register" class="h-60 mb-16">
+  <div id="register" class="h-65 mb-16">
     <div class="border-b border-gray-200">
       <div class="pl-6 pr-6">
       <h1 class="text-xl leading-relaxed mt-12 font-bold">ICH BIN NEU HIER</h1>
