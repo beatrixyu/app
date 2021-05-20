@@ -218,15 +218,5 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 
 </script>
 
-<style scoped lang="scss">
-.invalid {
-  #errorMsg { display: block; }
-  #passwordContainer { border-color: #FC5763 }
-  #passwordCross { display: block }
-  #showpassword { display: none }
-  #emailContainer { border-color: #FC5763 }
-  #emailCheck { display: none }
-  #emailCross { display: block }
-}
-</style>
+
 
