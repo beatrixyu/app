@@ -5,19 +5,19 @@
       <h1 class="text-xl leading-relaxed mt-12 font-bold">ICH BIN NEU HIER</h1>
       <h3 class="text-gray-400 text-xs">Jetzt Dein Kundenkonto erstellen.</h3>
       <div class="mt-5">
-          <div class="flex items-center">
+          <div class="flex items-center mb-4">
             <span class="inline-block align-middle h-full">
               <img src="../assets/images/blackStar.png" alt="star" class="w-5 mr-3">
             </span>
-            <p class="text-xs text-gray-600 leading-8">Automatisch <strong class="text-black">Punkte</strong> für Deinen Einkauf <strong class="text-black"> Sammeln</strong></p>
+            <p class="text-xs text-gray-600 leading-5">Automatisch <strong class="text-black">Punkte</strong> für Deinen Einkauf <strong class="text-black"> Sammeln</strong></p>
           </div>
-          <div class="flex items-center">
+          <div class="flex items-center mb-4">
             <span><img src="../assets/images/care.png" alt="care service" class="w-5 mr-3"></span>
-            <p class="text-xs text-gray-600 leading-8">Rabatte & <strong class="text-black">Gratisprodukte</strong>  erhalten</p>
+            <p class="text-xs text-gray-600 leading-5">Rabatte & <strong class="text-black">Gratisprodukte</strong>  erhalten</p>
           </div>
-          <div class="flex items-center pb-7">
+          <div class="flex items-center pb-5 mb-4">
             <span><img src="../assets/images/person.png" alt="customer service" class="w-5 mr-3"></span>
-            <p class="text-xs text-gray-600 leading-8"><strong class="text-black">Übersicht Deiner Bestellungen </strong>und Produkte bewerten</p></div>
+            <p class="text-xs text-gray-600 leading-5"><strong class="text-black">Übersicht Deiner Bestellungen </strong>und Produkte bewerten</p></div>
       </div>
     </div>
       </div>
@@ -40,7 +40,6 @@
               :style="showNameCheck"
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else 
             ><img class="w-5" src="../assets/images/cross1.png"/></span>            
-            <!-- <div class="error text-mini text-danger" v-if="!$v.name.required">Name is required</div> -->
             <div class="error text-mini text-danger" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
         </div>
         </div>
@@ -84,7 +83,7 @@
             >
             <div class="error text-mini text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</div>
             <span
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-800 text-side flex justify-center items-center"
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-600 text-side flex justify-center items-center"
               v-on:click="showPassword"
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
             <span
@@ -113,7 +112,7 @@
 
       <!-- vuelidate -->
       <div class="relative w-full h-full">
-      <p class="text-justify text-mini text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
+      <p class="text-justify text-side text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
       </div>
       <!-- end -->
      </form>           
@@ -145,7 +144,7 @@ export default {
       email:{
         required,
         email,
-      //   isStrickEmail(value){
+      //  isStrickEmail(value){
       //  if(value === ' ') return true
       //  let email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       //  email_regex.test(value)

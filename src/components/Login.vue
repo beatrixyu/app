@@ -28,7 +28,7 @@
               :style="showEmailCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else id="emailCross"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="!validEmail || loginStatus === 'ERROR'" id="emailCross"
               :style="showEmailCheck"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
@@ -55,7 +55,7 @@
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validPassword" :style="showPasswordCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else :style="showPasswordCheck"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" :style="showPasswordCheck" v-if="!validPassword || loginStatus === 'ERROR'"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
@@ -191,8 +191,8 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
                window.location = url;
            },1000)
          } else {   
-           console.log('wrong')
-            setTimeout(()=>{
+           console.log('error')
+          setTimeout(()=>{
                return this.resetFields()
              },800)
          }
@@ -226,8 +226,6 @@ button.active {
   cursor: pointer;
   background-color: #AED23B;
 }
-
-
 </style>
 
 
