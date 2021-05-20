@@ -1,7 +1,7 @@
 <template>
   <div id="login" class="w-screen">
     <div class="flex justify-center">
-    <div class="h-60 mb-16 w-full md:w-1/2 lg:w-4/7">
+    <div class="h-70 mb-16 w-full md:w-1/2 lg:w-4/7">
     <div class="border-gray-200">
       <div class="pl-6 pr-6">
       <h1 class="text-xl leading-relaxed mt-12 font-bold uppercase">WILLKOMMEN ZURÜCK</h1>
