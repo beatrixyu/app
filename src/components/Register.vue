@@ -33,10 +33,10 @@
               placeholder="Vorname*"
             />
             <span
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validName"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validName"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-else
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else
             ><img class="w-5" src="../assets/images/cross1.png"/></span>            
             <!-- <div class="error text-mini text-danger" v-if="!$v.name.required">Name is required</div> -->
             <div class="error text-mini text-danger" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
@@ -59,10 +59,10 @@
               <p>Invalid email</p>
             </div>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validEmail"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validEmail"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-else
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
@@ -84,16 +84,16 @@
               v-on:click="showPassword"
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
             <span
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCheck" v-if="validPassword"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCheck" v-if="validPassword"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCross" v-else
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCross" v-else
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
       </div>
       <div class="relative w-full h-full">
-       <button class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" :disabled="!formIsValid">
+       <button class="absolute bg-gray-400 h-11 rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" :disabled="!formIsValid" id="registerBtn" :class="{ active: formIsValid }">
        registrieren
       </button>
       <button 
@@ -154,9 +154,6 @@ export default {
       formIsValid(){
         return this.name && this.email && this.password;
       },
-      // passwordIsValid(){
-      
-      // },
       showCrossOrCheck() {
          return ''
           },
@@ -250,3 +247,10 @@ export default {
 }
 
 </script>
+
+<style>
+#registerBtn.active {
+  cursor: pointer;
+  background-color: #AED23B;
+}
+</style>

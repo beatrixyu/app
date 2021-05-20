@@ -24,10 +24,10 @@
               <p>Invalid email</p>
             </div>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validEmail" id="emailCheck" 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validEmail" id="emailCheck" 
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-else id="emailCross"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else id="emailCross"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
@@ -46,23 +46,24 @@
             >
             <div class="error text-mini text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</div>
             <span
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-800 text-side flex justify-center items-center"
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-300 text-side flex justify-center items-center"
               v-on:click="showPassword"
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
             <span
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCheck" v-if="validPassword"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCheck" v-if="validPassword"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCross" v-else
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCross" v-else
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
       </div>
        <button 
-         class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold uppercase"
+         class="bg-gray-400 h-11 rounded-sm w-full mt-5 uppercase text-white font-extrabold uppercase"
           type="submit" 
           :disabled="!formIsValid"
           @click="onLogin"
+          :class="{ active: formIsValid }"
           >anmelden</button>
       <div class="absolute text-danger text-justify text-side mt-2" id="errorMsg" v-if="loginStatus === 'ERROR'">
         <div><i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.</div> 
@@ -168,7 +169,7 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
          if(this.email == '123@123.com' && this.password == '123'){
            setTimeout(()=>{
               const url ='https://www.justspices.de/'
-              window.location = url;
+               window.location = url;
            },1000)
           //  document.getElementById("passwordContainer").style.borderColor="#AED23B"
           //  document.getElementById("passwordCheck").style.display="block"
@@ -217,6 +218,13 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 }
 
 </script>
+
+<style>
+button.active {
+  cursor: pointer;
+  background-color: #AED23B;
+}
+</style>
 
 
 
