@@ -1,7 +1,9 @@
 <template>
-  <div id="register" class="h-60 mb-16">
-    <div class="border-b border-gray-200">
-      <div class="pl-6 pr-6">
+  <div id="register" class="w-screen">
+    <div class="flex justify-center">
+    <div class="h-60 mb-16 w-full md:w-1/2 lg:w-4/7 ">
+    <div class="border-b border-gray-200 ">
+      <div class="pl-6 pr-6 justify-center">
       <h1 class="text-xl leading-relaxed mt-12 font-bold">ICH BIN NEU HIER</h1>
       <h3 class="text-gray-400 text-xs">Jetzt Dein Kundenkonto erstellen.</h3>
       <div class="mt-5">
@@ -117,6 +119,9 @@
       <!-- end -->
      </form>           
   </div>
+  </div>
+  </div>
+
 </template>
 
 <script>

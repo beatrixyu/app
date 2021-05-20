@@ -1,5 +1,7 @@
 <template>
-  <div id="login" class="h-65">
+  <div id="login" class="w-screen">
+    <div class="flex justify-center">
+    <div class="h-60 mb-16 w-full md:w-1/2 lg:w-4/7">
     <div class="border-gray-200">
       <div class="pl-6 pr-6">
       <h1 class="text-xl leading-relaxed mt-12 font-bold uppercase">WILLKOMMEN ZURÜCK</h1>
@@ -31,6 +33,8 @@
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="!validEmail || loginStatus === 'ERROR'" id="emailCross"
               :style="showEmailCheck"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
+                       
+
         </div>
         </div>
       </div>
@@ -48,14 +52,14 @@
             >
             <div class="error text-mini text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</div>
             <span
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-300 text-side flex justify-center items-center"
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-400 text-side flex justify-center items-center"
               v-on:click="showPassword"
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
             <span
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validPassword" :style="showPasswordCheck"
+              class="absolute top-0 rounded-sm right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validPassword" :style="showPasswordCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" :style="showPasswordCheck" v-if="!validPassword || loginStatus === 'ERROR'"
+              class="absolute top-0 rounded-sm right-0 h-10 w-10 text-gray-300 flex items-center justify-center" :style="showPasswordCheck" v-if="!validPassword || loginStatus === 'ERROR'"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
@@ -78,7 +82,8 @@
       </div>
 
      </form>              
-
+     </div>
+    </div>
   </div>
 </template>
 
@@ -143,7 +148,7 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
              return {
                'border-color': '#AED23B',
              } 
-           } 
+           }
            else {
              return ''
            }
@@ -190,12 +195,13 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
               const url ='https://www.justspices.de/'
                window.location = url;
            },1000)
-         } else {   
-           console.log('error')
-          setTimeout(()=>{
-               return this.resetFields()
-             },800)
-         }
+         }  
+           else{
+             console.log('loginStatus',this.loginStatus)
+              setTimeout(()=>{
+                return this.resetFields()
+              },800)
+           }
     },
     loginForm() {
       console.log('login!')

@@ -1,5 +1,5 @@
 <template>
-  <div id="main h-auto">
+  <div id="main" class="h-auto">
       <div class="flex h-20">
         <div class="flex-1">
             <router-link to="/register">
@@ -22,16 +22,10 @@
         </div>
   </div>
       <router-view></router-view>
-    <!-- <Register/>
-    <Login /> -->
   </div>
 
 </template>
-
 <script>
-// import Register from './Register.vue'
-// import Login from './Login.vue'
-
 
 export default {
   name: 'Main',
@@ -54,16 +48,5 @@ export default {
 </script>
 
 <style>
-   /* #main h1{
-       position: absolute;
-       width: 153px;
-       height: 25px;
-       left: 21px;
-       top: 189px;
-       font-family: Brandon Text;
-       font-style: normal;
-       font-weight: bold;
-       font-size: 18px;
-       line-height: 25px;
-   } */
+
 </style>
