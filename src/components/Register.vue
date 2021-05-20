@@ -22,7 +22,7 @@
     </div>
       </div>
      <form v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
-       <div class="form-row border border-gray-400 mt-5" >
+       <div class="form-row border border-gray-400 mt-5" id="nameContainer" :style="invalidNameStyles" >
          <div class="form-field h-10" :class="{ 'error': $v.name.$error }">
           <div class="relative w-full h-full">
             <input 
@@ -203,7 +203,7 @@ export default {
              return {
                'border-color': '#da5252',
              }
-           } else if(this.name && this.validName){
+           }else if(this.name && this.validName){
              return {
                'border-color': '#AED23B',
              }
@@ -248,7 +248,7 @@ export default {
 
 </script>
 
-<style>
+<style >
 #registerBtn.active {
   cursor: pointer;
   background-color: #AED23B;
