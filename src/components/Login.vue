@@ -8,7 +8,7 @@
       </div>
 
      <form v-on:submit.prevent="loginForm" class="mt-7 pl-6 pr-6" :class="formIsValid ? '' : 'invalid'">
-      <div class="form-row border border-gray-400 mt-5" :style="invalidEmailStyles" :class="showCross" id="emailContainer">
+      <div class="form-row border border-gray-400 mt-5" :style="invalidEmailStyles" :class="showCrossOrCheck" id="emailContainer">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input 
@@ -24,7 +24,7 @@
               <p>Invalid email</p>
             </div>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validEmail" id="emailCheck"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validEmail" id="emailCheck" 
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
               class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-else id="emailCross"
@@ -144,8 +144,6 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
              return ''
            }
          },
-
-
 },
     methods:{
       setEmail(value) {
@@ -159,20 +157,17 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
       showPassword () {
         this.passwordVisible = ! this.passwordVisible;
       },
-      showCross(){
-    return ''
-      },
-      showError(){
-        let password = document.getElementById("password");
-        let email = document.getElementById("email");
-        password.style.borderColor='#FC5763';
-        email.style.borderColor='#FC5763';
-      },
+      // showError(){
+      //   let password = document.getElementById("password");
+      //   let email = document.getElementById("email");
+      //   password.style.borderColor='#FC5763';
+      //   email.style.borderColor='#FC5763';
+      // },
        onLogin(){
          this.$v.$touch()
          if(this.email == '123@123.com' && this.password == '123'){
            setTimeout(()=>{
-              const url ='https:www.justspices.de/'
+              const url ='https://www.justspices.de/'
               window.location = url;
            },1000)
           //  document.getElementById("passwordContainer").style.borderColor="#AED23B"
@@ -186,21 +181,19 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
          } else {
           setTimeout(()=>{
              return this.resetFields()
-              // const url ='https://beatrixyu.github.io/app/'
-              // window.location = url;
            },1000)
-           document.getElementById("errorMsg").style.display='block';
-           document.getElementById("passwordContainer").style.borderColor="#FC5763"
-           document.getElementById("passwordCross").style.display="block"
-           document.getElementById("passwordCheck").style.display="none"
-           document.getElementById("emailContainer").style.borderColor="#FC5763"
-           document.getElementById("emailCheck").style.display="none"
-           document.getElementById("emailCross").style.display="block"
+          //  document.getElementById("errorMsg").style.display='block';
+          //  document.getElementById("passwordContainer").style.borderColor="#FC5763"
+          //  document.getElementById("passwordCross").style.display="block"
+          //  document.getElementById("passwordCheck").style.display="none"
+          //  document.getElementById("emailContainer").style.borderColor="#FC5763"
+          //  document.getElementById("emailCheck").style.display="none"
+          //  document.getElementById("emailCross").style.display="block"
 
 
          }
        },
-      loginForm() {
+    loginForm() {
       console.log('login!')
       this.$v.$touch()
       if (this.$v.$invalid) {
@@ -224,4 +217,16 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 }
 
 </script>
+
+<style scoped lang="scss">
+.invalid {
+  #errorMsg { display: block; }
+  #passwordContainer { border-color: #FC5763 }
+  #passwordCross { display: block }
+  #showpassword { display: none }
+  #emailContainer { border-color: #FC5763 }
+  #emailCheck { display: none }
+  #emailCross { display: block }
+}
+</style>
 
