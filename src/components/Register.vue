@@ -29,13 +29,13 @@
               type="text" 
               id="fullname"
               value=''
-              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
               v-model.trim="fullname" 
               placeholder="Vorname*"
             > -->
             <!-- valid -->
             <input 
-              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
               v-model.trim="$v.name.$model"
               :class="{'is-invalid':$v.name.$error,'is-valid':!$v.name.$invalid }"
               @input="setName($event.target.value)"
@@ -53,38 +53,39 @@
         </div>
         </div>
       </div>
-      <div class="form-row border border-gray-400 mt-5">
+      <div class="form-row border border-gray-400 mt-5" :style="[invalidEmailStyles,emailClasses]" :class="showCross">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input 
               type="email" 
               id="email"
               value=''
-              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
               v-model.trim="email" 
               @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
-              v-bind:style="[touchedEmailStyles,invalidEmailStyles]"
             >
-            <button 
-              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/check1.png"/></button>
-            <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross1.png"/></button>
+            <div class="hidden error text-mini text-danger" id="registerEmail">
+              <p>Invalid email</p>
+            </div>
+            <span 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validEmail"
+            ><img class="w-5" src="../assets/images/check1.png"/></span>
+            <span 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-else
+            ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
       </div>
        <div class="form-row border border-gray-400 mt-5">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
-            <input type="password" class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" id="password" v-model.trim="password" placeholder="Passwort*">
+            <input :type="passwordVisible ? 'text' : 'password'" class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" id="password" v-model.trim="password" placeholder="Passwort*">
             <span
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side flex justify-center items-center"
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-800 text-side flex justify-center items-center"
               v-on:click="showPassword"
-            >ZEIGEN</span>
-            <button 
-          
+            ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
+            <button
               class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
@@ -95,7 +96,7 @@
         </div>
       </div>
       <div class="relative w-full h-full">
-       <button class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" v-bind:disabled="!formIsValid">
+       <button class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" :disabled="!formIsValid">
        registrieren
       </button>
       <button 
@@ -134,7 +135,9 @@ export default {
         name: "",
         email: "",
         password:"",
-        submitStatus: null
+        passwordVisible: false,
+        submitStatus: null,
+        emailIsValid: false
       };
     },
     validations:{
@@ -157,30 +160,33 @@ export default {
       formIsValid(){
         return this.name && this.email && this.password;
       },
-       emailIsValid() {
-         return this.email.includes('@');
+      // passwordIsValid(){
+      
+      // },
+      showCross() {
+         return ''
+          },
+       validEmail(){
+           if (this.email && !this.email.includes('@')) {
+             return this.emailIsValid
+        } else return !this.emailIsValid
        },
-       touchedEmailStyles(){
-         if (this.email) {
-          return {
-            'border-color': '#bdbcbc',
-            'border-width': '2px'
-          }
-        } else {
-          return {
-            'border-color': '#e0e0e0',
-            'border-width': '2px'
-          }     
-        }
-        }, 
-         invalidEmailStyles(){
-           if (this.email && !this.emailIsValid) {
+      invalidEmailStyles(){
+        //  this.emailIsValid = this.email.includes('@');
+           if (this.email && !this.email.includes('@')) {
              return {
-               'background-color': '#ffeded',
-               'border-color': '#da5252'
+               'border-color': '#da5252',
              }
-           } else return ''
-         }
+           } else if(this.email && this.email.includes('@')){
+             return {
+               'border-color': '#AED23B',
+             }
+           }else {
+             return ''
+           }
+         },
+    
+         
     },
     methods:{
       setName(value) {
@@ -191,14 +197,15 @@ export default {
         this.email = value
         this.$v.email.$touch()
     },
-      showPassword: ()=>{
-        let password = document.getElementById("password");
-          if (password.type === "password") {
-            password.type = "text";
-          } else {
-            password.type = "password";
-          }
+      showPassword () {
+        this.passwordVisible = ! this.passwordVisible;
       },
+       emailClasses() {
+       return {
+           touched: this.email.length !== 0,
+           invalid: this.email && !this.emailIsValid
+       };
+},
       submitForm() {
           console.log('submit!')
           this.$v.$touch()

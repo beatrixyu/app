@@ -7,7 +7,7 @@
     </div>
       </div>
 
-     <form v-on:submit.prevent="loginForm" class="mt-7 pl-6 pr-6">
+     <form v-on:submit.prevent="loginForm" class="mt-7 pl-6 pr-6" :class="formIsInvalid ? 'invalid' : ''">
       <div class="form-row border border-gray-400 mt-5" id="emailContainer">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
@@ -15,16 +15,16 @@
               type="email" 
               id="email"
               value=''
-              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
               v-model.trim="email" 
               placeholder="E-Mail Adresse*"
               
             >
             <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="emailCheck"
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300" id="emailCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="emailCross"
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300" id="emailCross"
             ><img class="w-5" src="../assets/images/cross1.png"/></button>
         </div>
         </div>
@@ -35,21 +35,21 @@
             <input 
              type="password"
              value=''
-             class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side rounded-lg z-0 outline-none" 
+             class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
              id="password" 
              v-model.trim="password" 
              placeholder="Passwort*"
              >
             <span 
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 rounded-lg hover:text-gray-800 text-side flex justify-center items-center"
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-800 text-side flex justify-center items-center"
               v-on:click="showPassword"
             ><p id="showpassword">ZEIGEN</p> </span>
             
             <button 
-              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="passwordCheck"
+              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></button>
             <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg" id="passwordCross"
+              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300" id="passwordCross"
             ><img class="w-5" src="../assets/images/cross1.png"/></button>
 
         </div>
@@ -116,13 +116,13 @@ import { required, email } from 'vuelidate/lib/validators'
       }
     },
     methods:{
-      showPassword: ()=>{
+      showPassword() {
         let password = document.getElementById("password");
-          if (password.type === "password") {
-            password.type = "text";
-          } else {
-            password.type = "password";
-          }
+        if (password.type === "password") {
+          password.type = "text";
+        } else {
+          password.type = "password";
+        }
       },
       showError(){
         let password = document.getElementById("password");
@@ -131,7 +131,7 @@ import { required, email } from 'vuelidate/lib/validators'
         email.style.borderColor='#FC5763';
       },
       onLogin(){
-         this.$v.$touch()
+        this.$v.$touch()
         if(this.email == '123@123.com' && this.password == '123'){
           document.getElementById("passwordContainer").style.borderColor="#AED23B"
           document.getElementById("passwordCheck").style.display="block"
@@ -174,3 +174,4 @@ import { required, email } from 'vuelidate/lib/validators'
 }
 
 </script>
+
