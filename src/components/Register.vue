@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="w-screen">
-    <div class="flex justify-center">
-    <div class="h-60 mb-16 w-full md:w-1/2 lg:w-4/7 ">
+    <div class="h-70 mb-16 w-full flex justify-center">
+    <div class="md:w-1/2 lg:w-4/7 ">
     <div class="border-b border-gray-200 ">
       <div class="pl-6 pr-6 justify-center">
       <h1 class="text-xl leading-relaxed mt-12 font-bold">ICH BIN NEU HIER</h1>
@@ -114,7 +114,7 @@
 
       <!-- vuelidate -->
       <div class="relative w-full h-full">
-      <p class="text-justify text-side text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
+      <p class="text-justify text-xs text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
       </div>
       <!-- end -->
      </form>           
