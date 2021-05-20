@@ -25,15 +25,6 @@
        <div class="form-row border border-gray-400 mt-5" >
          <div class="form-field h-10" :class="{ 'error': $v.name.$error }">
           <div class="relative w-full h-full">
-            <!-- <input 
-              type="text" 
-              id="fullname"
-              value=''
-              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
-              v-model.trim="fullname" 
-              placeholder="Vorname*"
-            > -->
-            <!-- valid -->
             <input 
               class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
               v-model.trim="$v.name.$model"
@@ -41,19 +32,18 @@
               @input="setName($event.target.value)"
               placeholder="Vorname*"
             />
+            <span
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validName"
+            ><img class="w-5" src="../assets/images/check1.png"/></span>
+            <span 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-else
+            ><img class="w-5" src="../assets/images/cross1.png"/></span>            
             <!-- <div class="error text-mini text-danger" v-if="!$v.name.required">Name is required</div> -->
             <div class="error text-mini text-danger" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
-            <!-- end -->
-            <!-- <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/check1.png"/></button>
-            <button 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross.png"/></button> -->
         </div>
         </div>
       </div>
-      <div class="form-row border border-gray-400 mt-5" :style="[invalidEmailStyles,emailClasses]" :class="showCross">
+      <div class="form-row border border-gray-400 mt-5" :style="[invalidEmailStyles,emailClasses]" :class="showCrossOrCheck">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input 
@@ -65,7 +55,7 @@
               @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
             >
-            <div class="hidden error text-mini text-danger" id="registerEmail">
+            <div class="error text-mini text-danger" id="registerEmail" v-if="!validEmail">
               <p>Invalid email</p>
             </div>
             <span 
@@ -77,21 +67,28 @@
         </div>
         </div>
       </div>
-       <div class="form-row border border-gray-400 mt-5">
+      <div class="form-row border border-gray-400 mt-5" id="passwordContainer" :style="invalidPasswordStyles">
         <div class="form-field h-10">
-          <div class="relative w-full h-full">
-            <input :type="passwordVisible ? 'text' : 'password'" class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" id="password" v-model.trim="password" placeholder="Passwort*">
+          <div class="relative w-full h-full" :class="{ 'error': $v.password.$error }">
+            <input 
+            :type="passwordVisible ? 'text' : 'password'" 
+            class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
+            id="password" 
+            v-model.trim="$v.password.$model" 
+            placeholder="Passwort*" 
+            @input="setPassword($event.target.value)"
+            >
+            <div class="error text-mini text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</div>
             <span
               class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-800 text-side flex justify-center items-center"
               v-on:click="showPassword"
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
-            <button
-              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/check1.png"/></button>
-            <button 
-              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300 rounded-lg"
-            ><img class="w-5" src="../assets/images/cross1.png"/></button>
-
+            <span
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCheck" v-if="validPassword"
+            ><img class="w-5" src="../assets/images/check1.png"/></span>
+            <span 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCross" v-else
+            ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
       </div>
@@ -110,17 +107,9 @@
 
       <!-- vuelidate -->
       <div class="relative w-full h-full">
-      <!-- <button 
-        class="absolute bg-primary h-11 bg-secondary rounded-sm w-full mt-5 uppercase text-white font-extrabold" 
-        v-if="submitStatus === 'OK'"
-        type="submit">
-      <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
-      </button> -->
       <p class="text-justify text-mini text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
       </div>
       <!-- end -->
-
-      <!-- <div class="hidden text-justify text-mini text-secondary mt-20">Wir haben Dir eine E-Mail an johanna@gmx.de gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</div> -->
      </form>           
   </div>
 </template>
@@ -137,7 +126,8 @@ export default {
         password:"",
         passwordVisible: false,
         submitStatus: null,
-        emailIsValid: false
+        emailIsValid: false,
+        nameIsValid:false
       };
     },
     validations:{
@@ -154,7 +144,11 @@ export default {
       //  let email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       //  email_regex.test(value)
       //   }
-      }
+      },
+      password: {
+      required,
+      minLength: minLength(3)
+    },
     },
     computed: {
       formIsValid(){
@@ -163,7 +157,7 @@ export default {
       // passwordIsValid(){
       
       // },
-      showCross() {
+      showCrossOrCheck() {
          return ''
           },
        validEmail(){
@@ -172,7 +166,6 @@ export default {
         } else return !this.emailIsValid
        },
       invalidEmailStyles(){
-        //  this.emailIsValid = this.email.includes('@');
            if (this.email && !this.email.includes('@')) {
              return {
                'border-color': '#da5252',
@@ -185,9 +178,43 @@ export default {
              return ''
            }
          },
-    
-         
-    },
+       validPassword(){
+           if (this.password && this.password.length<3) {
+             return this.passwordIsValid
+        } else return !this.passwordIsValid
+       },
+      invalidPasswordStyles(){
+           if (this.password && !this.validPassword) {
+             return {
+               'border-color': '#da5252',
+             }
+           } else if(this.password && this.validPassword){
+             return {
+               'border-color': '#AED23B',
+             }
+           }else {
+             return ''
+           }
+         },
+       validName(){
+           if (this.name && this.name.length<4) {
+             return this.nameIsValid
+        } else return !this.nameIsValid
+       },
+      invalidNameStyles(){
+           if (this.name && !this.validName) {
+             return {
+               'border-color': '#da5252',
+             }
+           } else if(this.name && this.validName){
+             return {
+               'border-color': '#AED23B',
+             }
+           }else {
+             return ''
+           }
+         },
+},
     methods:{
       setName(value) {
         this.name = value
@@ -216,7 +243,7 @@ export default {
             setTimeout(()=>{
                const url ='https://www.justspices.de/'
                window.location = url;
-               },3000)
+               },2000)
           }
     }
     }

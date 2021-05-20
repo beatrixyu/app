@@ -7,8 +7,8 @@
     </div>
       </div>
 
-     <form v-on:submit.prevent="loginForm" class="mt-7 pl-6 pr-6" :class="formIsInvalid ? 'invalid' : ''">
-      <div class="form-row border border-gray-400 mt-5" id="emailContainer">
+     <form v-on:submit.prevent="loginForm" class="mt-7 pl-6 pr-6" :class="formIsValid ? '' : 'invalid'">
+      <div class="form-row border border-gray-400 mt-5" :style="invalidEmailStyles" :class="showCross" id="emailContainer">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input 
@@ -17,72 +17,62 @@
               value=''
               class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
               v-model.trim="email" 
+              @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
-              
             >
-            <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300" id="emailCheck"
-            ><img class="w-5" src="../assets/images/check1.png"/></button>
-            <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300" id="emailCross"
-            ><img class="w-5" src="../assets/images/cross1.png"/></button>
+            <div class="error text-mini text-danger" id="registerEmail" v-if="!validEmail">
+              <p>Invalid email</p>
+            </div>
+            <span 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-if="validEmail" id="emailCheck"
+            ><img class="w-5" src="../assets/images/check1.png"/></span>
+            <span 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" v-else id="emailCross"
+            ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
       </div>
-       <div class="form-row border border-gray-400 mt-5" id="passwordContainer">
+
+      <div class="form-row border border-gray-400 mt-5" id="passwordContainer" :style="invalidPasswordStyles">
         <div class="form-field h-10">
-          <div class="relative w-full h-full">
+          <div class="relative w-full h-full" :class="{ 'error': $v.password.$error }">
             <input 
-             type="password"
-             value=''
-             class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
-             id="password" 
-             v-model.trim="password" 
-             placeholder="Passwort*"
-             >
-            <span 
+            :type="passwordVisible ? 'text' : 'password'" 
+            class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
+            id="password" 
+            v-model.trim="$v.password.$model" 
+            placeholder="Passwort*" 
+            @input="setPassword($event.target.value)"
+            >
+            <div class="error text-mini text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</div>
+            <span
               class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-800 text-side flex justify-center items-center"
               v-on:click="showPassword"
-            ><p id="showpassword">ZEIGEN</p> </span>
-            
-            <button 
-              class="hidden absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCheck"
-            ><img class="w-5" src="../assets/images/check1.png"/></button>
-            <button 
-              class="absolute hidden top-0 right-0 h-10 w-10 text-gray-300" id="passwordCross"
-            ><img class="w-5" src="../assets/images/cross1.png"/></button>
-
+            ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
+            <span
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCheck" v-if="validPassword"
+            ><img class="w-5" src="../assets/images/check1.png"/></span>
+            <span 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300" id="passwordCross" v-else
+            ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
       </div>
-       <!-- vuelidate -->
-      <!-- <div class="relative w-full h-full">
-      <button 
-        class="absolute bg-primary h-11 bg-primary rounded-sm w-full mt-5 uppercase text-white font-extrabold" 
-        type="submit" 
-        :disabled="!formIsValid"
-        @click="onLogin"
-       > anmelden
-        </button>
-        <div class="" v-if="loginStatus === 'ERROR'">
-        <div class="hidden text-danger text-justify text-mini mt-5" >
-          <i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.
-        </div>
-        </div>
-      </div> -->
-      <!-- end -->
        <button 
          class="bg-primary h-11 bg-green-300 rounded-sm w-full mt-5 uppercase text-white primary font-extrabold uppercase"
           type="submit" 
-          v-bind:disabled="!formIsValid"
+          :disabled="!formIsValid"
           @click="onLogin"
           >anmelden</button>
-      <div class="hidden text-danger text-justify text-mini mt-5" id="errorMsg">
-        <i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.
+      <div class="absolute text-danger text-justify text-side mt-2" id="errorMsg" v-if="loginStatus === 'ERROR'">
+        <div><i class="fas fa-times mr-1"></i>Ungültiger Benutzername oder Passwort.</div> 
       </div>
+      <p class="absolute text-justify text-side mt-2 text-gray-400" v-if="loginStatus === 'OK'">Login Successfully! Go to homepage now...</p>         
+      <div class="relative w-full h-full">
+      </div>      
       <div class="text-gray-400 w-full mt-10">
-       <p class="text-center underline text-side"><a href="https://beatrixyu.github.io/app/" target="_blank">Passwort vergessen?</a> </p>
-     </div>
+      <p class="text-center underline text-side"><a href="https://beatrixyu.github.io/app/" target="_blank">Passwort vergessen?</a> </p>
+      </div>
 
      </form>              
 
@@ -90,7 +80,7 @@
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, minLength } from 'vuelidate/lib/validators'
 
  export default {
     name:'loginForm',
@@ -98,7 +88,10 @@ import { required, email } from 'vuelidate/lib/validators'
       return {
         email: "",
         password:"",
-        loginStatus: null
+        passwordVisible: false,
+        loginStatus: false,
+        emailIsValid: false,
+        passwordIsValid:false,
       };
     },
     validations:{
@@ -106,23 +99,68 @@ import { required, email } from 'vuelidate/lib/validators'
         required,
         email
       },
-      password: {
-        required
-      }
+    password: {
+      required,
+      minLength: minLength(3)
+    },
     },
     computed: {
       formIsValid(){
         return this.email && this.password;
-      }
-    },
+      },
+       validEmail(){
+           if (this.email && !this.email.includes('@')) {
+             return this.emailIsValid
+        } else return !this.emailIsValid
+       },
+      invalidEmailStyles(){
+           if (this.email && !this.email.includes('@')) {
+             return {
+               'border-color': '#da5252',
+             }
+           } else if(this.email && this.email.includes('@')){
+             return {
+               'border-color': '#AED23B',
+             }
+           }else {
+             return ''
+           }
+         },
+       validPassword(){
+           if (this.password && this.password.length<3) {
+             return this.passwordIsValid
+        } else return !this.passwordIsValid
+       },
+      invalidPasswordStyles(){
+           if (this.password && !this.validPassword) {
+             return {
+               'border-color': '#da5252',
+             }
+           } else if(this.password && this.validPassword){
+             return {
+               'border-color': '#AED23B',
+             }
+           }else {
+             return ''
+           }
+         },
+
+
+},
     methods:{
-      showPassword() {
-        let password = document.getElementById("password");
-        if (password.type === "password") {
-          password.type = "text";
-        } else {
-          password.type = "password";
-        }
+      setEmail(value) {
+        this.email = value
+        this.$v.email.$touch()
+    },
+      setPassword(value) {
+        this.password = value
+        this.$v.password.$touch()
+    },
+      showPassword () {
+        this.passwordVisible = ! this.passwordVisible;
+      },
+      showCross(){
+    return ''
       },
       showError(){
         let password = document.getElementById("password");
@@ -130,34 +168,38 @@ import { required, email } from 'vuelidate/lib/validators'
         password.style.borderColor='#FC5763';
         email.style.borderColor='#FC5763';
       },
-      onLogin(){
-        this.$v.$touch()
-        if(this.email == '123@123.com' && this.password == '123'){
-          document.getElementById("passwordContainer").style.borderColor="#AED23B"
-          document.getElementById("passwordCheck").style.display="block"
-          document.getElementById("showpassword").style.display="none"
-          document.getElementById("passwordCross").style.display="none"
-          document.getElementById("emailContainer").style.borderColor="#AED23B"
-          document.getElementById("emailCheck").style.display="block"
-          document.getElementById("emailCross").style.display="none"
-          document.getElementById("errorMsg").style.display='none';
-
+       onLogin(){
+         this.$v.$touch()
+         if(this.email == '123@123.com' && this.password == '123'){
            setTimeout(()=>{
-             const url ='https://www.justspices.de/'
-             window.location = url;
-          },2000)
-        } else {
-          document.getElementById("errorMsg").style.display='block';
-          document.getElementById("passwordContainer").style.borderColor="#FC5763"
-          document.getElementById("passwordCross").style.display="block"
-          document.getElementById("showpassword").style.display="none"
-          document.getElementById("emailContainer").style.borderColor="#FC5763"
-          document.getElementById("emailCheck").style.display="none"
-          document.getElementById("emailCross").style.display="block"
+              const url ='https:www.justspices.de/'
+              window.location = url;
+           },1000)
+          //  document.getElementById("passwordContainer").style.borderColor="#AED23B"
+          //  document.getElementById("passwordCheck").style.display="block"
+          //  document.getElementById("passwordCross").style.display="none"
+          //  document.getElementById("emailContainer").style.borderColor="#AED23B"
+          //  document.getElementById("emailCheck").style.display="block"
+          //  document.getElementById("emailCross").style.display="none"
+          //  document.getElementById("errorMsg").style.display='none';
+
+         } else {
+          setTimeout(()=>{
+             return this.resetFields()
+              // const url ='https://beatrixyu.github.io/app/'
+              // window.location = url;
+           },1000)
+           document.getElementById("errorMsg").style.display='block';
+           document.getElementById("passwordContainer").style.borderColor="#FC5763"
+           document.getElementById("passwordCross").style.display="block"
+           document.getElementById("passwordCheck").style.display="none"
+           document.getElementById("emailContainer").style.borderColor="#FC5763"
+           document.getElementById("emailCheck").style.display="none"
+           document.getElementById("emailCross").style.display="block"
 
 
-        }
-      },
+         }
+       },
       loginForm() {
       console.log('login!')
       this.$v.$touch()
@@ -169,6 +211,14 @@ import { required, email } from 'vuelidate/lib/validators'
       else {
           this.loginStatus = 'OK'
       }
+    },
+    resetFields(){
+      this.email = '';
+      this.password = '';
+      this.passwordIsValid=false
+      this.passwordVisible= false
+      this.loginStatus= false
+      this.emailIsValid= false
     }
     }
 }
