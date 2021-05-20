@@ -33,10 +33,12 @@
               placeholder="Vorname*"
             />
             <span
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validName"
+              :style="showNameCheck"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validName" 
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else
+              :style="showNameCheck"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else 
             ><img class="w-5" src="../assets/images/cross1.png"/></span>            
             <!-- <div class="error text-mini text-danger" v-if="!$v.name.required">Name is required</div> -->
             <div class="error text-mini text-danger" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
@@ -59,9 +61,11 @@
               <p>Invalid email</p>
             </div>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validEmail"
+              :style="showEmailCheck"
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validEmail" 
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
+              :style="showEmailCheck"
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
@@ -85,9 +89,11 @@
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
             <span
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCheck" v-if="validPassword"
+            :style="showPasswordCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCross" v-else
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCross" v-else 
+            :style="showPasswordCheck"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
         </div>
         </div>
@@ -152,7 +158,7 @@ export default {
     },
     computed: {
       formIsValid(){
-        return this.name && this.email && this.password;
+        return this.name.length > 3 && this.email.includes('@') && this.password.length >2;
       },
       showCrossOrCheck() {
          return ''
@@ -211,6 +217,40 @@ export default {
              return ''
            }
          },
+      showPasswordCheck(){
+          if (this.password.length <1) {
+             return{
+               'display':'none'
+             }
+        } else {
+             return{
+               'display':'flex'
+             }        
+          }    
+      },
+      showEmailCheck(){
+          if (this.email.length <1) {
+             return{
+               'display':'none'
+             }
+        } else {
+             return{
+               'display':'flex'
+             }        
+          }    
+      },
+      showNameCheck(){
+          if (this.name.length <1) {
+             return{
+               'display':'none'
+             }
+        } else {
+             return{
+               'display':'flex'
+             }        
+          }    
+      },
+
 },
     methods:{
       setName(value) {
