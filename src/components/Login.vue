@@ -18,7 +18,7 @@
               id="email"
               value=''
               class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
-              :class="loginStatus === 'ERROR' ? 'border-danger border-2' : ''"
+              :class="loginStatus === 'ERROR' ? 'border-danger border' : ''"
               v-model.trim="email" 
               @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
@@ -44,7 +44,7 @@
             <input 
             :type="passwordVisible ? 'text' : 'password'" 
             class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none border-red-400"
-            :class="loginStatus === 'ERROR' ? 'border-danger border-2' : ''"
+            :class="loginStatus === 'ERROR' ? 'border-danger border' : ''"
             id="password" 
             v-model.trim="$v.password.$model" 
             placeholder="Passwort*" 

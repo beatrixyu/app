@@ -111,13 +111,13 @@
       </button>
 
       </div>
-
       <!-- vuelidate -->
       <div class="relative w-full h-full">
       <p class="text-justify text-xs text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
       </div>
       <!-- end -->
-     </form>           
+     </form>  
+          
   </div>
   </div>
   </div>
