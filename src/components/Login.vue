@@ -18,6 +18,7 @@
               id="email"
               value=''
               class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
+              :class="loginStatus === 'ERROR' ? 'border-danger border-2' : ''"
               v-model.trim="email" 
               @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
@@ -26,15 +27,13 @@
               <p>Invalid email</p>
             </div>
             <span 
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validEmail" id="emailCheck" 
+              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validEmail && !loginStatus" id="emailCheck" 
               :style="showEmailCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="!validEmail || loginStatus === 'ERROR'" id="emailCross"
               :style="showEmailCheck"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
-                       
-
         </div>
         </div>
       </div>
@@ -44,7 +43,8 @@
           <div class="relative w-full h-full" :class="{ 'error': $v.password.$error }">
             <input 
             :type="passwordVisible ? 'text' : 'password'" 
-            class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
+            class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none border-red-400"
+            :class="loginStatus === 'ERROR' ? 'border-danger border-2' : ''"
             id="password" 
             v-model.trim="$v.password.$model" 
             placeholder="Passwort*" 
@@ -52,11 +52,11 @@
             >
             <div class="error text-mini text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</div>
             <span
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-400 text-side flex justify-center items-center"
+              class="absolute top-0 right-0 h-10 w-20 text-gray-300 mr-2 hover:text-gray-400 text-side flex justify-center items-center"
               v-on:click="showPassword"
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
             <span
-              class="absolute top-0 rounded-sm right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validPassword" :style="showPasswordCheck"
+              class="absolute top-0 rounded-sm right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validPassword && !loginStatus" :style="showPasswordCheck"
             ><img class="w-5" src="../assets/images/check1.png"/></span>
             <span 
               class="absolute top-0 rounded-sm right-0 h-10 w-10 text-gray-300 flex items-center justify-center" :style="showPasswordCheck" v-if="!validPassword || loginStatus === 'ERROR'"
@@ -122,13 +122,15 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
         } else return !this.emailIsValid
        },
       invalidEmailStyles(){
-           if (this.email && !this.email.includes('@')) {
+           if (this.email && !this.email.includes('@') && !this.loginStatus) {
              return {
                'border-color': '#da5252',
+               'border-width': '1px',
              }
-           } else if(this.email && this.email.includes('@')){
+           } else if(this.email && this.email.includes('@') && !this.loginStatus){
              return {
                'border-color': '#AED23B',
+               'border-width': '1px',
              }
            }else {
              return ''
@@ -140,13 +142,15 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
         } else return !this.passwordIsValid
        },
       invalidPasswordStyles(){
-           if (this.password && !this.validPassword) {
+           if (this.password && !this.validPassword && !this.loginStatus) {
              return {
                'border-color': '#da5252',
+               'border-width': '1px',
              }
-           } else if(this.password && this.validPassword){
+           } else if(this.password && this.validPassword && !this.loginStatus){
              return {
                'border-color': '#AED23B',
+               'border-width': '1px',
              } 
            }
            else {
@@ -200,20 +204,20 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
              console.log('loginStatus',this.loginStatus)
               setTimeout(()=>{
                 return this.resetFields()
-              },800)
+              },1500)
            }
     },
     loginForm() {
       console.log('login!')
-      this.$v.$touch()
-      if (this.$v.$invalid) {
-        this.loginStatus = 'ERROR'
-      }else if(this.email !== '123@123.com' || this.password !== '123'){
-        this.loginStatus = 'ERROR'
-      }else {
-        this.loginStatus = 'OK'
-      }
-    },
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          this.loginStatus = 'ERROR'
+        }else if(this.email !== '123@123.com' || this.password !== '123'){
+          this.loginStatus = 'ERROR'
+        }else {
+          this.loginStatus = 'OK'
+        }
+      },
       resetFields(){
         this.email = '';
         this.password = '';

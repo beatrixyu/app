@@ -85,7 +85,7 @@
             >
             <div class="error text-mini text-danger" v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</div>
             <span
-              class="absolute top-0 right-0 h-10 w-20 text-gray-300 hover:text-gray-600 text-side flex justify-center items-center"
+              class="absolute top-0 right-0 h-10 w-20 mr-2 text-gray-300 hover:text-gray-600 text-side flex justify-center items-center"
               v-on:click="showPassword"
             ><i :class="passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i></span>
             <span
