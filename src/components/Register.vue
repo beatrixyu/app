@@ -21,32 +21,32 @@
             <span><img src="../assets/images/person.png" alt="customer service" class="w-5 mr-3"></span>
             <p class="text-xs text-gray-600 leading-5"><strong class="text-black">Übersicht Deiner Bestellungen </strong>und Produkte bewerten</p></div>
       </div>
+      </div>
     </div>
-      </div>
-     <form v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
-       <div class="form-row border border-gray-400 mt-5" id="nameContainer" :style="invalidNameStyles" >
-         <div class="form-field h-10" :class="{ 'error': $v.name.$error }">
-          <div class="relative w-full h-full">
-            <input 
-              class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
-              v-model.trim="$v.name.$model"
-              :class="{'is-invalid':$v.name.$error,'is-valid':!$v.name.$invalid }"
-              @input="setName($event.target.value)"
-              placeholder="Vorname*"
-            />
-            <span
-              :style="showNameCheck"
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validName" 
-            ><img class="w-5" src="../assets/images/check1.png"/></span>
-            <span 
-              :style="showNameCheck"
-              class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else 
-            ><img class="w-5" src="../assets/images/cross1.png"/></span>            
-            <div class="error text-mini text-danger" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
+    <form v-on:submit.prevent="submitForm" class="mt-7 pl-6 pr-6">
+      <div class="form-row border border-gray-400 mt-5" :style="invalidNameStyles" >
+        <div class="form-field h-10" :class="{ 'error': $v.name.$error }">
+        <div class="relative w-full h-full">
+          <input 
+            class="m-0 p-0 placeholder-gray-400 h-full w-full pl-4 text-side z-0 outline-none" 
+            v-model.trim="$v.name.$model"
+            :class="{'is-invalid':$v.name.$error,'is-valid':!$v.name.$invalid }"
+            @input="setName($event.target.value)"
+            placeholder="Vorname*"
+          />
+          <span
+            :style="showNameCheck"
+            class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-if="validName" 
+          ><img class="w-5" src="../assets/images/check1.png"/></span>
+          <span 
+            :style="showNameCheck"
+            class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else 
+          ><img class="w-5" src="../assets/images/cross1.png"/></span>            
+          <div class="error text-mini text-danger" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
         </div>
         </div>
       </div>
-      <div class="form-row border border-gray-400 mt-5" :style="[invalidEmailStyles,emailClasses]" :class="showCrossOrCheck">
+      <div class="form-row border border-gray-400 mt-5" :style="[invalidEmailStyles,emailClasses]">
         <div class="form-field h-10">
           <div class="relative w-full h-full">
             <input 
@@ -58,7 +58,7 @@
               @input="setEmail($event.target.value)"
               placeholder="E-Mail Adresse*"
             >
-            <div class="error text-mini text-danger" id="registerEmail" v-if="!validEmail">
+            <div class="error text-mini text-danger" v-if="!validEmail">
               <p>Invalid email</p>
             </div>
             <span 
@@ -69,10 +69,10 @@
               :style="showEmailCheck"
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" v-else
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
-        </div>
+          </div>
         </div>
       </div>
-      <div class="form-row border border-gray-400 mt-5" id="passwordContainer" :style="invalidPasswordStyles">
+      <div class="form-row border border-gray-400 mt-5" :style="invalidPasswordStyles">
         <div class="form-field h-10">
           <div class="relative w-full h-full" :class="{ 'error': $v.password.$error }">
             <input 
@@ -96,32 +96,27 @@
               class="absolute top-0 right-0 h-10 w-10 text-gray-300 flex items-center justify-center" id="passwordCross" v-else 
             :style="showPasswordCheck"
             ><img class="w-5" src="../assets/images/cross1.png"/></span>
-        </div>
+          </div>
         </div>
       </div>
       <div class="relative w-full h-full">
-       <button class="absolute bg-gray-400 h-11 rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" :disabled="!formIsValid" id="registerBtn" :class="{ active: formIsValid }">
+      <button class="absolute bg-gray-400 h-11 rounded-sm w-full mt-5 uppercase text-white font-extrabold" type="submit" :disabled="!formIsValid" id="registerBtn" :class="{ active: formIsValid }">
        registrieren
       </button>
       <button 
-        class="absolute bg-primary h-11 bg-secondary rounded-sm w-full mt-5 uppercase text-white font-extrabold" 
+        class="absolute h-11 bg-secondary rounded-sm w-full mt-5 uppercase text-white font-extrabold" 
         v-if="submitStatus === 'OK'"
         type="submit">
-      <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
+        <i class="fas fa-check"></i> BESTÄTIGUNG PER MAIL VERSENDET
       </button>
-
       </div>
-      <!-- vuelidate -->
       <div class="relative w-full h-full">
       <p class="text-justify text-xs text-secondary mt-20" v-if="submitStatus === 'OK'">Wir haben Dir eine E-Mail an <strong>{{email}}</strong> gesendet. Dort findest Du einen Aktivierungslink für Dein Benutzerkonto.</p>
       </div>
-      <!-- end -->
-     </form>  
-          
+    </form>  
+    </div>
+    </div>
   </div>
-  </div>
-  </div>
-
 </template>
 
 <script>
@@ -158,21 +153,18 @@ export default {
       password: {
       required,
       minLength: minLength(3)
-    },
+      },
     },
     computed: {
-      formIsValid(){
+      formIsValid() {
         return this.name.length > 3 && this.email.includes('@') && this.password.length >2;
       },
-      showCrossOrCheck() {
-         return ''
-          },
-       validEmail(){
+      validEmail() {
            if (this.email && !this.email.includes('@')) {
              return this.emailIsValid
         } else return !this.emailIsValid
-       },
-      invalidEmailStyles(){
+      },
+      invalidEmailStyles() {
            if (this.email && !this.email.includes('@')) {
              return {
                'border-color': '#da5252',
@@ -181,53 +173,47 @@ export default {
              return {
                'border-color': '#AED23B',
              }
-           }else {
-             return ''
-           }
+           } else return ''
          },
-       validPassword(){
+      validPassword() {
            if (this.password && this.password.length<3) {
              return this.passwordIsValid
         } else return !this.passwordIsValid
-       },
-      invalidPasswordStyles(){
-           if (this.password && !this.validPassword) {
-             return {
-               'border-color': '#da5252',
-             }
-           } else if(this.password && this.validPassword){
-             return {
-               'border-color': '#AED23B',
-             }
-           }else {
-             return ''
-           }
-         },
-       validName(){
-           if (this.name && this.name.length<4) {
-             return this.nameIsValid
+      },
+      invalidPasswordStyles() {
+       if (this.password && !this.validPassword) {
+         return {
+           'border-color': '#da5252',
+         }
+       } else if(this.password && this.validPassword){
+         return {
+           'border-color': '#AED23B',
+         }
+       } else return ''
+      },
+      validName() {
+        if (this.name && this.name.length<4) {
+           return this.nameIsValid
         } else return !this.nameIsValid
-       },
-      invalidNameStyles(){
-           if (this.name && !this.validName) {
-             return {
-               'border-color': '#da5252',
-             }
-           }else if(this.name && this.validName){
-             return {
-               'border-color': '#AED23B',
-             }
-           }else {
-             return ''
-           }
-         },
-      showPasswordCheck(){
+      },
+      invalidNameStyles() {
+        if (this.name && !this.validName) {
+          return {
+            'border-color': '#da5252',
+          }
+        }else if(this.name && this.validName){
+          return {
+            'border-color': '#AED23B',
+          }
+        }else return ''
+      },
+      showPasswordCheck() {
           if (this.password.length <1) {
-             return{
+             return {
                'display':'none'
              }
         } else {
-             return{
+             return {
                'display':'flex'
              }        
           }    
@@ -255,7 +241,7 @@ export default {
           }    
       },
 
-},
+    },
     methods:{
       setName(value) {
         this.name = value
@@ -265,31 +251,30 @@ export default {
         this.email = value
         this.$v.email.$touch()
     },
-      showPassword () {
+      showPassword() {
         this.passwordVisible = ! this.passwordVisible;
-      },
-       emailClasses() {
+    },
+      emailClasses() {
        return {
            touched: this.email.length !== 0,
            invalid: this.email && !this.emailIsValid
        };
-},
+    },
       submitForm() {
-          console.log('submit!')
-          this.$v.$touch()
-          if (this.$v.$invalid) {
-            this.submitStatus = 'ERROR'
-          } else {
-            this.submitStatus = 'OK'
-            setTimeout(()=>{
-               const url ='https://www.justspices.de/'
-               window.location = url;
-               },2000)
-          }
+        console.log('submit!')
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          this.submitStatus = 'ERROR'
+        } else {
+          this.submitStatus = 'OK'
+          setTimeout(()=>{
+             const url ='https://www.justspices.de/'
+             window.location = url;
+          },2000)
+        }
+      }
     }
-    }
-}
-
+  }
 </script>
 
 <style >
